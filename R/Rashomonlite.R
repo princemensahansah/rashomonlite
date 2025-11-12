@@ -1,17 +1,17 @@
 #' Fit multiple logistic regression models of a specified dimension
 #'
 #' This function fits all (or a sampled subset) of generalized linear models (GLMs)
-#' of a given dimension `k` from the predictors in `X`. It computes model AIC,
+#' of a given dimension \code{k} from the predictors in \code{X}. It computes model AIC,
 #' regression coefficients, and p-values for each model.
 #'
 #' @param X A data frame or matrix of predictors. Columns should be numeric or
 #'   factors suitable for inclusion in a logistic regression.
 #' @param y A numeric vector of binary responses (0 = failure, 1 = success),
-#'   with length equal to the number of rows in `X`.
+#'   with length equal to the number of rows in \code{X}.
 #' @param k Integer specifying the number of predictors to include in each model.
 #' @param m Integer specifying the maximum number of models to fit for this dimension.
-#'   If the total number of possible combinations exceeds `m`, a random sample of
-#'   size `m` is drawn (with fixed seed for reproducibility).
+#'   If the total number of possible combinations exceeds \code{m}, a random sample of
+#'   size \code{m} is drawn (with fixed seed for reproducibility).
 #'
 #' @return A data frame with one row per fitted model and the following columns:
 #' \describe{
@@ -20,10 +20,9 @@
 #'   \item{coef}{Named numeric vector of model coefficients.}
 #'   \item{pvals}{Named numeric vector of p-values for each coefficient.}
 #' }
-#' @author Prince Mensah Ansah <pma0020@auburn.edu>,
-#'         Mark Castilo Philip <mcp0001@auburn.edu>,
-#'         Mohammad Al Srayheen <mls0023@auburn.edu>
-
+#' @author Prince Mensah Ansah,
+#'         Mark Castilo Philip,
+#'         Mohammad Al Srayheen
 #' @export
 fit_models_dim <- function(X, y, k, m) {
   all_vars <- colnames(X)
@@ -81,9 +80,9 @@ fit_models_dim <- function(X, y, k, m) {
 #'
 #' @return A subset of the input data frame containing only the top `alpha` proportion
 #'   of models sorted by lowest AIC.
-#' @author Prince Mensah Ansah <pma0020@auburn.edu>,
-#'         Mark Castilo Philip <mcp0001@auburn.edu>,
-#'         Mohammad Al Srayheen <mls0023@auburn.edu>
+#' @author Prince Mensah Ansah,
+#'         Mark Castilo Philip,
+#'         Mohammad Al Srayheen
 #' @export
 select_best <- function(models_df, alpha = 0.5) {
   n_select <- ceiling(alpha * nrow(models_df))
@@ -103,10 +102,10 @@ select_best <- function(models_df, alpha = 0.5) {
 #'
 #' @return A list of unique character vectors, where each vector represents the set
 #'   of predictors for a candidate model of dimension `k_next`.
-#' @author Prince Mensah Ansah <pma0020@auburn.edu>,
-#'         Mark Castilo Philip <mcp0001@auburn.edu>,
-#'         Mohammad Al Srayheen <mls0023@auburn.edu>
-
+#' @author Prince Mensah Ansah,
+#'         Mark Castilo Philip,
+#'         Mohammad Al Srayheen
+#'
 #' @export
 grow_from <- function(best_df, all_vars, k_next, m) {
   combos_list <- list()
@@ -133,12 +132,12 @@ grow_from <- function(best_df, all_vars, k_next, m) {
 #' Run Rashomon model selection procedure
 #'
 #' This function performs iterative model fitting and selection across increasing
-#' model dimensions (from 1 up to `pmax`). At each step, it keeps the top-performing
+#' model dimensions (from 1 up to \code{pmax}). At each step, it keeps the top-performing
 #' models (based on AIC) and expands them to explore higher-dimensional models.
 #'
 #' @param X A data frame or matrix of predictors. All columns should be suitable
 #'   for logistic regression (numeric or factors).
-#' @param y A numeric vector of binary responses (0/1), with length matching `nrow(X)`.
+#' @param y A numeric vector of binary responses (0/1), with length matching \code{nrow(X)}.
 #' @param pmax Integer specifying the maximum model dimension to explore.
 #' @param m Integer specifying the maximum number of models per dimension.
 #' @param alpha Numeric between 0 and 1 specifying the proportion of top models to retain at each dimension.
@@ -172,10 +171,10 @@ grow_from <- function(best_df, all_vars, k_next, m) {
 #'
 #' # Inspect AIC summary to verify package works
 #' head(result$aic_summary)
-#' @author Prince Mensah Ansah <pma0020@auburn.edu>,
-#'         Mark Castilo Philip <mcp0001@auburn.edu>,
-#'         Mohammad Al Srayheen <mls0023@auburn.edu>
-
+#' @author Prince Mensah Ansah,
+#'         Mark Castilo Philip,
+#'         Mohammad Al Srayheen
+#'
 #' @export
 run_rashomon <- function(X, y, pmax = 5, m = 90, alpha = 0.5) {
   all_vars <- colnames(X)
