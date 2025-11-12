@@ -1,6 +1,6 @@
 Package: Rashomonlite
 Type: Package
-Title: Rashomon Model Selection Software
+Title: Rashomon Model Selection
 Version: 0.1.0
 Authors@R: 
     c(
