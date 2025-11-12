@@ -20,6 +20,10 @@
 #'   \item{coef}{Named numeric vector of model coefficients.}
 #'   \item{pvals}{Named numeric vector of p-values for each coefficient.}
 #' }
+#' @author Prince Mensah Ansah <pma0020@auburn.edu>,
+#'         Mark Castilo Philip <mcp0001@auburn.edu>,
+#'         Mohammad Al Srayheen <mls0023@auburn.edu>
+
 #' @export
 fit_models_dim <- function(X, y, k, m) {
   all_vars <- colnames(X)
@@ -69,12 +73,17 @@ fit_models_dim <- function(X, y, k, m) {
 
 #' Select the top-performing models based on AIC
 #'
-#' @param models_df A data frame returned by [fit_models_dim()], containing AIC values.
-#' @param alpha Numeric value between 0 and 1 specifying the fraction of models to retain.
-#'   For example, `alpha = 0.5` keeps the best 50% of models.
+#' This function takes a data frame of models (as returned by `fit_models_dim()`)
+#' and returns the top fraction `alpha` of models sorted by lowest AIC.
+#'
+#' @param models_df A data frame returned by `fit_models_dim()`, containing AIC values.
+#' @param alpha Numeric between 0 and 1 specifying the fraction of models to retain.
 #'
 #' @return A subset of the input data frame containing only the top `alpha` proportion
 #'   of models sorted by lowest AIC.
+#' @author Prince Mensah Ansah <pma0020@auburn.edu>,
+#'         Mark Castilo Philip <mcp0001@auburn.edu>,
+#'         Mohammad Al Srayheen <mls0023@auburn.edu>
 #' @export
 select_best <- function(models_df, alpha = 0.5) {
   n_select <- ceiling(alpha * nrow(models_df))
@@ -82,6 +91,7 @@ select_best <- function(models_df, alpha = 0.5) {
   best_idx <- sorted_idx[1:n_select]
   models_df[best_idx, , drop = FALSE]
 }
+
 
 
 #' Expand top models to the next dimension
@@ -93,6 +103,10 @@ select_best <- function(models_df, alpha = 0.5) {
 #'
 #' @return A list of unique character vectors, where each vector represents the set
 #'   of predictors for a candidate model of dimension `k_next`.
+#' @author Prince Mensah Ansah <pma0020@auburn.edu>,
+#'         Mark Castilo Philip <mcp0001@auburn.edu>,
+#'         Mohammad Al Srayheen <mls0023@auburn.edu>
+
 #' @export
 grow_from <- function(best_df, all_vars, k_next, m) {
   combos_list <- list()
@@ -158,6 +172,10 @@ grow_from <- function(best_df, all_vars, k_next, m) {
 #'
 #' # Inspect AIC summary to verify package works
 #' head(result$aic_summary)
+#' @author Prince Mensah Ansah <pma0020@auburn.edu>,
+#'         Mark Castilo Philip <mcp0001@auburn.edu>,
+#'         Mohammad Al Srayheen <mls0023@auburn.edu>
+
 #' @export
 run_rashomon <- function(X, y, pmax = 5, m = 90, alpha = 0.5) {
   all_vars <- colnames(X)
