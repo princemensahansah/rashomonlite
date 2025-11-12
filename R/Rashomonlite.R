@@ -129,7 +129,7 @@ grow_from <- function(best_df, all_vars, k_next, m) {
 }
 
 
-#' Run Rashomon model selection procedure
+#' Run Rashomon model selection
 #'
 #' This function performs iterative model fitting and selection across increasing
 #' model dimensions (from 1 up to \code{pmax}). At each step, it keeps the top-performing
